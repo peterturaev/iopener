@@ -1595,3 +1595,8 @@ build.dart --machine --changed=app/eyeopener.dart
 
 build.dart finished [1712 ms]
 
+---
+build.dart --machine --changed=app/assets/images/iOpener_Logo.png
+
+build.dart finished [111 ms]
+
