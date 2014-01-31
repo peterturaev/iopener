@@ -1,6 +1,7 @@
 import 'dart:html';
 import 'dart:js';
 import 'dart:math';
+import 'package:css_animation/css_animation.dart';
 
 int boundsChange = 100;
 String query = '';
@@ -90,6 +91,9 @@ class swipe{
 class windowProp {
  num width;
  num height;
+ windowProp(){
+   
+ }
 }
 
 class pageData{
@@ -99,16 +103,20 @@ class pageData{
   var theStyle;
   var theContentStyleFront;
   var theContentStyleBack;
+  
 }
 
 class Flip {
-  Element _el;
+  Element _el, _flippingPage, _beforePage, _afterPage;
   num _current = 0, _flipSpeed = 900, _currentPage, _state, _flipPagesCount;
   String _flipTimingFunction = 'linear', _flipSide, _flipDirection;
-  List<Element> _pages, _flipPages; 
+  List<Element> _pages, _flipPages;
+  CssAnimation _flipAni;
   num _pagesCount;
   History _history;
-  windowProp _winProp;
+  windowProp _winProp = new windowProp();
+  bool _isAnimatingDiv = false;
+
   
 
   Flip(Element element, [num current=0, num flipSpeed=900, String flipTimingFunction='linear']) {
@@ -126,16 +134,16 @@ class Flip {
   }
   
   void _init(){
-    this._pages = element.children('div.f-page');
+    this._pages =  this._el.querySelectorAll('div.f-page');
     this._pagesCount = this._pages.length;
-    this._history = window.History;
+    //this._history = window.History;
     this._currentPage = this._current;
     this._validateOpts();
     this._getWinSize();
-    this._getState();
+    //this._getState();
     this._layout();
     this._initTouchSwipe();
-    this._loadEvents();
+    //this._loadEvents();
     this._goto();
   }
   
@@ -165,7 +173,7 @@ class Flip {
   }
   
   bool _isNumber(num n){
-   return double.parse(n) == int.parse(n) && !n.isNaN && n.isFinite;
+   return double.parse(n.toString()) == int.parse(n.toString()) && !n.isNaN && n.isFinite;
   }
   
   void _adjustLayout(num page){
@@ -174,18 +182,18 @@ class Flip {
     for (var i = 0; i < this._flipPages.length; i++) {
      // querySelector("#myFeeds").appendHtml("<li>"+ myFeeds[i] +"</li>");
       
-      Element $page = this_flipPages[i];
+      Element $page = this._flipPages[i];
 
-      if (i == page - 1) {
+      if (i == (page - 1)) {
         /// ??
-        $page.style.transform = 'rotateY( -180deg )';
-        $page.style.zIndex =  _self._flipPagesCount - 1 + i;
+        $page.style.transform = 'rotateY(-180deg )';
+        $page.style.zIndex =  (_self._flipPagesCount - 1 + i).toString();
       } else if (i < page) {
         $page.style.transform = 'rotateY( -181deg )';
-        $page.style.zIndex =  _self._flipPagesCount - 1 + i;
+        $page.style.zIndex =  (_self._flipPagesCount - 1 + i).toString();
       } else {
         $page.style.transform = 'rotateY( 0deg )';
-        $page.style.zIndex =  _self._flipPagesCount - 1 - i;
+        $page.style.zIndex =  (_self._flipPagesCount - 1 - i).toString();
       }
       
     }
@@ -204,7 +212,7 @@ class Flip {
 
     for (var i = 0; i <= this._pagesCount - 2; ++i) {
       Element $page = this._pages[i];
-      pageData _pd;
+      pageData _pd = new pageData();
       _pd.theClass = 'page';
       _pd.theContentFront =  $page.innerHtml;
       if(i != this._pagesCount){
@@ -218,7 +226,7 @@ class Flip {
       if (i == 0) {
         _pd.theClass += ' cover';
       } else {
-        _pd.theContentStyleFront += 'left:-' + (this.windowProp.width / 2).toString() + 'px';
+        _pd.theContentStyleFront += 'left:-' + (this._winProp.width / 2).toString() + 'px';
         if (i == this._pagesCount - 2) {
           _pd.theClass += ' cover-back';
         }
@@ -230,12 +238,14 @@ class Flip {
       //querySelector('#pageTmpl').tmpl(pageData).appendTo(this.$el);
       this._el.appendHtml(html);
     }
-
-    this._pages.remove();
-    this._flipPages = this._el.children('div.page');
+    for (var i = 0; i < this._pages.length; i++) {
+      this._pages[i].style.display = 'none';
+    }
+    
+    this._flipPages = this._el.querySelectorAll('div.page');
     this._flipPagesCount = this._flipPages.length;
     num st;
-    if(this._state == num){
+    if(this._state == null){
       st = this._currentPage;
     }else{
       st = this._state;
@@ -244,37 +254,84 @@ class Flip {
   }
   
   void _setLayoutSize() {
-    this._el.style.width = this._winProp.width;
-    this._el.style.height = this._winProp.height;
+    this._el.style.width = this._winProp.width.toString();
+    this._el.style.height = this._winProp.height.toString();
   }
   
   void _initTouchSwipe(){
     var _self = this;
     swipe Swipe = new swipe(querySelector(".page"));
+    
     if (!_self._isAnimating()) {
+      _self._setFlippingPage();
+      _self._beforePage = _self._flippingPage.previousElementSibling;
+      _self._afterPage = _self._flippingPage.nextElementSibling;
 
-     // (Swipe.startX < _self._winProp.width / 2) ? _self.flipSide = 'l2r' : _self.flipSide = 'r2l';
       if(Swipe.direction == 'rt'){
         _self._flipSide = 'l2r';
         _self._turnPage(0);
-        _self._updatePage();
+        //_self._updatePage();
       }else{
         _self._flipSide = 'r2l';
         _self._turnPage(180);
-        _self._updatePage();
+        //_self._updatePage();
       }
 
     }
-    if (Swipe.direction == 'u' || direction == 'd') {
-        _self._removeOverlays();
-        return false;
+
+    if (Swipe.direction == 'u' || Swipe.direction == 'd') {
+        //_self._removeOverlays();
+        return;
     }
+    
     _self._flipDirection = Swipe.direction;
 
     // on the first & last page neighbors we don't flip
     if (_self._currentPage == 0 && _self._flipSide == 'l2r' || _self._currentPage == _self._flipPagesCount && _self._flipSide == 'r2l') {
-      return false;
+      return;
     } 
+  }
+  
+  bool _isAnimating(){
+    if (this._isAnimatingDiv) {
+      return true;
+    }
+    return false;
+  }
+  
+  void _setFlippingPage(){
+    var _self = this;
+    if(this._flipSide == 'l2r'){
+      this._flippingPage = this._flipPages[this._currentPage - 1]; 
+    }else{
+      this._flippingPage = this._flipPages[this._currentPage];
+    }  
+  }
+  
+  void _turnPage(num angle, [bool update = false]){
+    this._beforePage.style.transform = 'rotateY( -180deg )';
+    // if not moving manually set a transition to flip the page
+    if (!update) {
+      this._flippingPage.style.transition = '-webkit-transform ' + this._flipSpeed.toString() + 'ms ' + this._flipTimingFunction.toString();
+    }
+    var idx;
+    if(this._flipSide == 'r2l'){
+      idx = this._currentPage;
+    }else{
+      idx = this._currentPage - 1;
+    }
+    if (this._flipSide == 'r2l') {
+      this._flippingPage.style.zIndex = (this._flipPagesCount - 1 + idx).toString();
+    }
+    for(var i=0;i < this._flippingPage.children.length; i++ ){
+      if(this._flippingPage.children[i].classes.contains('.back')){
+        this._flippingPage.children[i].style.transform = 'rotateY(180deg)';
+      }
+    }
+    this._flippingPage.style.transform = 'rotateY(-' + angle.toString() + 'deg)';
+
+    // show overlays
+    //this._overlay(angle, update);
   }
   
   
@@ -289,11 +346,13 @@ void main() {
   //querySelector("#sample_text_id")
    // ..text = "Click me! test"
    // ..onClick.listen(resizeWindow);
-  swipe Swipe = new swipe(querySelector("body"));
+  //swipe Swipe = new swipe(querySelector("body"));
 
   for (var i = 0; i < myFeeds.length; i++) {
     querySelector("#myFeeds").appendHtml("<li>"+ myFeeds[i] +"</li>");
   }
+  Flip fckt = new Flip(querySelector('#flip'));
+  
 }
 
 void resizeWindow(MouseEvent event) {
