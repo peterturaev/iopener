@@ -21,6 +21,10 @@ packages:
     description: collection
     source: hosted
     version: "0.9.1"
+  css_animation:
+    description: css_animation
+    source: hosted
+    version: "0.1.6"
   custom_element:
     description: custom_element
     source: hosted

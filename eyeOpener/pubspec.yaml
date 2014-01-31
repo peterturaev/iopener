@@ -3,3 +3,4 @@ description: A sample chrome packaged application
 dependencies:
   browser: any
   polymer: 0.9.4
+  css_animation: 0.1.6
