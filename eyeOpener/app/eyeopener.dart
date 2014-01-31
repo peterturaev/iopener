@@ -115,7 +115,7 @@ class Flip {
   num _pagesCount;
   History _history;
   windowProp _winProp = new windowProp();
-  bool _isAnimatingDiv = false;
+  bool _isAnimatingDiv = false, _start = true;
 
   
 
@@ -154,8 +154,9 @@ class Flip {
   }
   
   void _getWinSize(){
-    _winProp.width = window.screen.available.width;
-    _winProp.height =  window.screen.available.height;
+    _winProp.width = window.innerWidth;
+    
+    _winProp.height =  window.innerHeight;
   }
   
   void _goto(){
@@ -180,7 +181,6 @@ class Flip {
     var _self = this;
     
     for (var i = 0; i < this._flipPages.length; i++) {
-     // querySelector("#myFeeds").appendHtml("<li>"+ myFeeds[i] +"</li>");
       
       Element $page = this._flipPages[i];
 
@@ -232,14 +232,17 @@ class Flip {
         }
       }
       
-      String html = "<div class="+ _pd.theClass +" style="+ _pd.theStyle +"><div class='front'><div class='outer'>";
-      html += "<div class='content' style="+ _pd.theContentStyleFront + "><div class='inner'>"+_pd.theContentFront+"</div></div></div>";
-      html += "</div><div class='back'><div class='outer'><div class='content' style="+_pd.theContentStyleBack+"><div class='inner'>"+ _pd.theContentBack + "</div></div></div></div></div>";
+      String html = "<div class='"+ _pd.theClass +"' style='"+ _pd.theStyle +"'><div class='front'><div class='outer'>";
+      html += "<div class='content' style='"+ _pd.theContentStyleFront + "'><div class='inner'>"+_pd.theContentFront+"</div></div></div>";
+      html += "</div><div class='back'><div class='outer'><div class='content' style='"+_pd.theContentStyleBack+"'><div class='inner'>"+ _pd.theContentBack + "</div></div></div></div></div>";
       //querySelector('#pageTmpl').tmpl(pageData).appendTo(this.$el);
       this._el.appendHtml(html);
     }
+    
     for (var i = 0; i < this._pages.length; i++) {
-      this._pages[i].style.display = 'none';
+      //this._pages[i].style.display = 'none';
+      this._pages[i].remove();
+      
     }
     
     this._flipPages = this._el.querySelectorAll('div.page');
@@ -254,28 +257,39 @@ class Flip {
   }
   
   void _setLayoutSize() {
-    this._el.style.width = this._winProp.width.toString();
-    this._el.style.height = this._winProp.height.toString();
+    String _style = "width:"+ this._winProp.width.toString() + "px; height: " + this._winProp.height.toString() + "px";
+    this._el.setAttribute('style', _style);
   }
   
-  void _initTouchSwipe(){
+  void _initTouchSwipe([num delta]){
+    window.animationFrame.then(this._initTouchSwipe);
     var _self = this;
     swipe Swipe = new swipe(querySelector(".page"));
+    _self._setFlippingPage();
+    if(Swipe.direction == 'rt'){
+      _self._flipSide = 'l2r';
+      _self._turnPage(0, true);
+      //_self._updatePage();
+    }else{
+      _self._flipSide = 'r2l';
+      _self._turnPage(180, true);
+      //_self._updatePage();
+    }
     
     if (!_self._isAnimating()) {
-      _self._setFlippingPage();
+      if(_self._start == true){
+        return;
+      }else{
+        _self._start = false;
+      }
+      
+     
+     
+      
       _self._beforePage = _self._flippingPage.previousElementSibling;
       _self._afterPage = _self._flippingPage.nextElementSibling;
 
-      if(Swipe.direction == 'rt'){
-        _self._flipSide = 'l2r';
-        _self._turnPage(0);
-        //_self._updatePage();
-      }else{
-        _self._flipSide = 'r2l';
-        _self._turnPage(180);
-        //_self._updatePage();
-      }
+      
 
     }
 
@@ -309,7 +323,10 @@ class Flip {
   }
   
   void _turnPage(num angle, [bool update = false]){
-    this._beforePage.style.transform = 'rotateY( -180deg )';
+    if(this._beforePage != null){
+      this._beforePage.style.transform = 'rotateY( -180deg )';
+    }
+    
     // if not moving manually set a transition to flip the page
     if (!update) {
       this._flippingPage.style.transition = '-webkit-transform ' + this._flipSpeed.toString() + 'ms ' + this._flipTimingFunction.toString();
