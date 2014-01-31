@@ -1,7 +1,6 @@
 import 'dart:html';
 import 'dart:js';
 import 'dart:math';
-import 'dart_touch.dart' as touch;
 
 int boundsChange = 100;
 String query = '';
@@ -14,6 +13,79 @@ List<String> myFeeds = const [ 'my feeds','my feeds','my feeds','my feeds','my f
  * * http://developer.chrome.com/apps/api_index.html
  */
 
+class swipe{
+  num startX, endX, startY, endY;
+  String direction;
+  bool _isHorizontal;
+  
+  Element _elm;
+  swipe(Element elm, [bool isHorizontal=true]){
+    this._elm = elm;
+    this._isHorizontal = isHorizontal;
+    this._initTouchSwipe();
+  }
+  _initTouchSwipe(){
+    _elm.onTouchStart.listen(this._startT);
+    _elm.onTouchCancel.listen(this._endT);
+    _elm.onMouseDown.listen(this._startD);
+    _elm.onMouseUp.listen(this._endD);
+  }
+  void _startD(MouseEvent event){
+    event.preventDefault();
+    this.startX = event.page.x;
+    this.startY = event.page.y;
+    
+  }
+  void _endD(MouseEvent event){
+    event.preventDefault();
+    this.endX = event.page.x;
+    this.endY = event.page.y;
+    if(this.startX > this.endX){
+      this.direction = 'lf';
+    }else{
+      this.direction = 'rt';
+    }
+    
+    if(!this._isHorizontal){
+      if(this.startY > this.endY){
+        this.direction = 'down';
+      }else{
+        this.direction = 'up';
+      }
+    }
+    print(direction);
+  }
+  
+  void _startT(TouchEvent event) {
+    event.preventDefault();
+    event.touches.forEach((touch) {
+      this.startX = touch.page.x;
+      this.startY = touch.page.y;
+    });
+  }
+  
+  void _endT(TouchEvent event) {
+    event.preventDefault();
+    event.touches.forEach((touch) {
+      this.endX = touch.page.x;
+      this.endY = touch.page.y;
+      if(this.startX > this.endX){
+        this.direction = 'lf';
+      }else{
+        this.direction = 'rt';
+      }
+      if(!this._isHorizontal){
+        if(this.startY > this.endY){
+          this.direction = 'down';
+        }else{
+          this.direction = 'up';
+        }
+      }
+      
+      print(direction);
+    });
+  }
+}
 
 class windowProp {
  num width;
@@ -31,17 +103,12 @@ class pageData{
 
 class Flip {
   Element _el;
-  num _current = 0;
-  num _currentPage;
-  String _flipTimingFunction = 'linear';
-  num _flipSpeed = 900;
-  List<Element> _pages; 
+  num _current = 0, _flipSpeed = 900, _currentPage, _state, _flipPagesCount;
+  String _flipTimingFunction = 'linear', _flipSide, _flipDirection;
+  List<Element> _pages, _flipPages; 
   num _pagesCount;
   History _history;
   windowProp _winProp;
-  num _state;
-  num _flipPagesCount;
-  List<Element> _flipPages;
   
 
   Flip(Element element, [num current=0, num flipSpeed=900, String flipTimingFunction='linear']) {
@@ -183,20 +250,47 @@ class Flip {
   
   void _initTouchSwipe(){
     var _self = this;
-    
+    swipe Swipe = new swipe(querySelector(".page"));
+    if (!_self._isAnimating()) {
+
+     // (Swipe.startX < _self._winProp.width / 2) ? _self.flipSide = 'l2r' : _self.flipSide = 'r2l';
+      if(Swipe.direction == 'rt'){
+        _self._flipSide = 'l2r';
+        _self._turnPage(0);
+        _self._updatePage();
+      }else{
+        _self._flipSide = 'r2l';
+        _self._turnPage(180);
+        _self._updatePage();
+      }
+
+    }
+    if (Swipe.direction == 'u' || direction == 'd') {
+        _self._removeOverlays();
+        return false;
+    }
+    _self._flipDirection = Swipe.direction;
+
+    // on the first & last page neighbors we don't flip
+    if (_self._currentPage == 0 && _self._flipSide == 'l2r' || _self._currentPage == _self._flipPagesCount && _self._flipSide == 'r2l') {
+      return false;
+    } 
   }
   
   
   
+
   
   
-  
+   
 }
 
 void main() {
   //querySelector("#sample_text_id")
    // ..text = "Click me! test"
    // ..onClick.listen(resizeWindow);
+  swipe Swipe = new swipe(querySelector("body"));
+
   for (var i = 0; i < myFeeds.length; i++) {
     querySelector("#myFeeds").appendHtml("<li>"+ myFeeds[i] +"</li>");
   }

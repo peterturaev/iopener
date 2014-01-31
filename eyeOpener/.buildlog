@@ -478,3 +478,280 @@ build.dart --machine --changed=app/eyeopener.dart
 
 build.dart finished [1794 ms]
 
+---
+build.dart --machine --changed=app/eyeopener.dart
+
+build.dart finished [2069 ms]
+
+---
+build.dart --machine --changed=app/eyeopener.dart
+
+build.dart finished [1903 ms]
+
+---
+build.dart --machine --changed=app/eyeopener.dart
+
+build.dart finished [1968 ms]
+
+---
+build.dart --machine --changed=app/eyeopener.dart
+
+build.dart finished [1663 ms]
+
+---
+build.dart --machine --changed=app/eyeopener.dart
+
+build.dart finished [1799 ms]
+
+---
+build.dart --machine --changed=app/eyeopener.dart
+
+build.dart finished [1924 ms]
+
+---
+build.dart --machine --changed=app/eyeopener.dart
+
+build.dart finished [1883 ms]
+
+---
+build.dart --machine --changed=app/eyeopener.dart
+
+build.dart finished [1922 ms]
+
+---
+build.dart --machine --changed=app/eyeopener.dart
+
+build.dart finished [1799 ms]
+
+---
+build.dart --machine --changed=app/eyeopener.dart
+
+build.dart finished [1539 ms]
+
+---
+build.dart --machine --changed=app/eyeopener.dart
+
+build.dart finished [2008 ms]
+
+---
+build.dart --machine --changed=app/eyeopener.dart
+
+build.dart finished [1767 ms]
+
+---
+build.dart --machine --changed=app/eyeopener.dart
+
+build.dart finished [1780 ms]
+
+---
+build.dart --machine --changed=app/eyeopener.dart
+
+build.dart finished [1919 ms]
+
+---
+build.dart --machine --changed=app/eyeopener.dart
+
+build.dart finished [1644 ms]
+
+---
+build.dart --machine --changed=app/eyeopener.dart
+
+build.dart finished [2238 ms]
+
+---
+build.dart --machine --changed=app/eyeopener.dart
+
+build.dart finished [2087 ms]
+
+---
+build.dart --machine --changed=app/eyeopener.dart
+
+build.dart finished [1913 ms]
+
+---
+build.dart --machine --changed=app/eyeopener.dart
+
+build.dart finished [2033 ms]
+
+---
+build.dart --machine --changed=app/eyeopener.dart
+
+build.dart finished [1754 ms]
+
+---
+build.dart --machine --changed=app/eyeopener.dart
+
+build.dart finished [1998 ms]
+
+---
+build.dart --machine --changed=app/eyeopener.dart
+
+build.dart finished [2114 ms]
+
+---
+build.dart --machine --changed=app/eyeopener.dart
+
+build.dart finished [2223 ms]
+
+---
+build.dart --machine --changed=app/eyeopener.dart
+
+build.dart finished [2189 ms]
+
+---
+build.dart --machine --changed=app/eyeopener.dart
+
+build.dart finished [1769 ms]
+
+---
+build.dart --machine --changed=app/eyeopener.dart
+
+build.dart finished [1772 ms]
+
+---
+build.dart --machine --changed=app/eyeopener.dart
+
+build.dart finished [1812 ms]
+
+---
+build.dart --machine --changed=app/eyeopener.dart
+
+build.dart finished [1966 ms]
+
+---
+build.dart --machine --changed=app/eyeopener.dart
+
+build.dart finished [1653 ms]
+
+---
+build.dart --machine --changed=app/eyeopener.dart
+
+build.dart finished [1943 ms]
+
+---
+build.dart --machine --changed=app/eyeopener.html
+
+build.dart finished [106 ms]
+
+---
+build.dart --machine --changed=app/eyeopener.dart
+
+build.dart finished [2007 ms]
+
+---
+build.dart --machine --changed=app/eyeopener.dart
+
+build.dart finished [1990 ms]
+
+---
+build.dart --machine --changed=app/eyeopener.dart
+
+build.dart finished [1768 ms]
+
+---
+build.dart --machine --changed=app/eyeopener.dart
+
+build.dart finished [1717 ms]
+
+---
+build.dart --machine --changed=app/eyeopener.dart
+
+build.dart finished [1981 ms]
+
+---
+build.dart --machine --changed=app/eyeopener.dart
+
+build.dart finished [1753 ms]
+
+---
+build.dart --machine --changed=app/eyeopener.dart
+
+build.dart finished [1805 ms]
+
+---
+build.dart --machine --changed=app/eyeopener.dart
+
+build.dart finished [1618 ms]
+
+---
+build.dart --machine --changed=app/eyeopener.dart
+
+build.dart finished [2096 ms]
+
+---
+build.dart --machine --changed=app/eyeopener.dart
+
+build.dart finished [2075 ms]
+
+---
+build.dart --machine --changed=app/eyeopener.dart
+
+build.dart finished [1720 ms]
+
+---
+build.dart --machine --changed=app/eyeopener.dart
+
+build.dart finished [1898 ms]
+
+---
+build.dart --machine --changed=app/eyeopener.dart
+
+build.dart finished [1767 ms]
+
+---
+build.dart --machine --changed=app/eyeopener.dart
+
+build.dart finished [1570 ms]
+
+---
+build.dart --machine --changed=app/eyeopener.dart
+
+build.dart finished [2187 ms]
+
+---
+build.dart --machine --changed=app/eyeopener.dart
+
+build.dart finished [1669 ms]
+
+---
+build.dart --machine --changed=app/eyeopener.dart
+
+build.dart finished [1792 ms]
+
+---
+build.dart --machine --changed=app/eyeopener.dart
+
+build.dart finished [2135 ms]
+
+---
+build.dart --machine --changed=app/eyeopener.dart
+
+build.dart finished [1610 ms]
+
+---
+build.dart --machine --changed=app/eyeopener.dart
+
+build.dart finished [1744 ms]
+
+---
+build.dart --machine --changed=app/eyeopener.dart
+
+build.dart finished [1819 ms]
+
+---
+build.dart --machine --changed=app/eyeopener.dart
+
+build.dart finished [1541 ms]
+
+---
+build.dart --machine --changed=app/eyeopener.dart
+
+build.dart finished [1751 ms]
+
+---
+build.dart --machine --changed=app/eyeopener.dart
+
+build.dart finished [1530 ms]
+
+---
+build.dart --machine --changed=app/feedManager.dart --changed=app/test_manager.html
