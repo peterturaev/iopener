@@ -262,25 +262,20 @@ class Flip {
   }
   
   void _initTouchSwipe([num delta]){
-    print('----1');
+
     var _self = this;
     swipe Swipe = new swipe(querySelector(".page"));
     _self._setFlippingPage();
-    try{
-      _self._beforePage = _self._flippingPage.previousElementSibling;
-      _self._afterPage = _self._flippingPage.nextElementSibling;
-    }catch(e){
-      print(e + '--inTouchSwipe');
-    }
+    _self._flipDirection = Swipe.direction;
+
     if(Swipe.direction == 'rt'){
       _self._flipSide = 'l2r';
       _self._turnPage(0);
-      this._isAnimatingDiv = true;
       //_self._updatePage();
     }else{
       _self._flipSide = 'r2l';
       _self._turnPage(180);
-      this._isAnimatingDiv = true;
+      
       //_self._updatePage();
     }
     
@@ -291,14 +286,19 @@ class Flip {
         _self._start = false;
       }
     }
+    try{
+      _self._beforePage = _self._flippingPage.previousElementSibling;
+      _self._afterPage = _self._flippingPage.nextElementSibling;
+    }catch(e){
+      print(e + '--inTouchSwipe');
+    }
     
-
     if (Swipe.direction == 'u' || Swipe.direction == 'd') {
         //_self._removeOverlays();
         return;
     }
     
-    _self._flipDirection = Swipe.direction;
+    
 
     // on the first & last page neighbors we don't flip
     if (_self._currentPage == 0 && _self._flipSide == 'l2r' || _self._currentPage == _self._flipPagesCount && _self._flipSide == 'r2l') {
@@ -325,18 +325,17 @@ class Flip {
   }
   
   void _turnPage(num angle, [bool update = false]){
-   
+    this._isAnimatingDiv = true;
     try{
         this._beforePage.style.transform = 'rotateY( -180deg )';
     }catch(e){
-        print(e);
+       // print(e);
     }
 
-    
+    print(update);
     // if not moving manually set a transition to flip the page
     if (!update) {
-      print('---');
-      this._flippingPage.style.transition = '-webkit-transform ' + this._flipSpeed.toString() + 'ms ' + this._flipTimingFunction.toString();
+      this._flippingPage.style.transition = '-webkit-transition ' + this._flipSpeed.toString() + 'ms ' + this._flipTimingFunction.toString();
     }
     var idx;
     if(this._flipSide == 'r2l'){
@@ -367,16 +366,10 @@ class Flip {
 }
 
 void main() {
-  //querySelector("#sample_text_id")
-   // ..text = "Click me! test"
-   // ..onClick.listen(resizeWindow);
-  //swipe Swipe = new swipe(querySelector("body"));
-
   for (var i = 0; i < myFeeds.length; i++) {
     querySelector("#myFeeds").appendHtml("<li>"+ myFeeds[i] +"</li>");
   }
   Flip fckt = new Flip(querySelector('#flip'));
-  
 }
 
 void resizeWindow(MouseEvent event) {
