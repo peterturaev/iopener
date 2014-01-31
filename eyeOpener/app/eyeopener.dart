@@ -315,14 +315,34 @@ class Flip {
     return false;
   }
   
+  void _flipEnd(TransitionEvent event){
+    this._currentPage += 1;
+    print('wtf');
+  }
+  
+  void _onError(){
+    print('FML');
+  }
+  
+  void _onDone(){
+    this._currentPage += 1;
+    print('wtf2');
+  }
+  
   void _setFlippingPage(){
     var _self = this;
     if(this._flipSide == 'l2r'){
-      this._flippingPage = this._flipPages[this._currentPage - 1]; 
+      this._flippingPage = this._flipPages[this._currentPage - 1];
+    }else if(this._start){
+      this._flippingPage = this._flipPages[this._currentPage];
+      this._start = false;
     }else{
       this._flippingPage = this._flipPages[this._currentPage];
-    }  
+    }
+    this._flippingPage.onTransitionEnd.listen(this._flipEnd).onDone(this._onDone);
   }
+
+  
   
   void _turnPage(num angle, [bool update = false]){
     this._isAnimatingDiv = true;
@@ -332,11 +352,8 @@ class Flip {
        // print(e);
     }
 
-    print(update);
-    // if not moving manually set a transition to flip the page
-    if (!update) {
-      this._flippingPage.style.transition = '-webkit-transition ' + this._flipSpeed.toString() + 'ms ' + this._flipTimingFunction.toString();
-    }
+    //print(update);
+    
     var idx;
     if(this._flipSide == 'r2l'){
       idx = this._currentPage;
@@ -352,7 +369,11 @@ class Flip {
       }
     }
     this._flippingPage.style.transform = 'rotateY(-' + angle.toString() + 'deg)';
-
+// if not moving manually set a transition to flip the page
+    if (!update) {
+      this._flippingPage.style.transition = this._flipSpeed.toString() + 'ms ' + this._flipTimingFunction.toString();
+      this._flippingPage.onTransitionEnd.listen(this._flipEnd).onDone(this._onDone);
+    }
     // show overlays
     //this._overlay(angle, update);
   }
