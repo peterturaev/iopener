@@ -1,0 +1,35 @@
+.topic-board {
+  width: 80%;
+  max-width: 615px;
+  min-width: 500px;
+  margin: 0 auto;
+  padding: 0;
+  overflow: hidden;
+}
+.topic-board li {
+  list-style: none;
+  float:left;
+  margin-right: 5px;
+  margin-bottom: 5px;
+  width: 200px;
+  height: 200px;
+  position: relative;
+  overflow: hidden;
+}
+
+.topic-board li img {
+  height: 100%;
+}
+
+.topic-board li span {
+  color: #fff;
+  font-size: 26px;
+  font-family: Helvetica, Arial;
+  position: absolute;
+  left: 20px;
+  bottom: 15px;
+}
+
+#signinButton {
+  margin: 0 auto;
+}

@@ -1,13 +1,11 @@
-library feedManager;
-
 import 'dart:html';
 import 'dart:async';
 import 'dart:convert';
+import 'settings.dart';
 
 class FeedManager {
-  static var apiHost = 'http://afongmbprx8.cnet.cnwk:5000';
-  static var feedsUrl = apiHost + '/feeds';
-  static var topicsUrl = apiHost = '/topics';
+  //static var apiHost = 'http://afongmbprx8.cnet.cnwk:5000';
+  static var feedsUrl = Settings.apiHost + '/feeds';
   
   var topic, lastId = null, firstId = null;
   var feeds = [];
@@ -22,9 +20,9 @@ class FeedManager {
     var url = feedsUrl;
     if (lastId != null && firstId != null) {
       if (append) {
-        url += '/before' + firstId;
+        url += '/before/' + firstId;
       } else {
-        url += '/after' + lastId;
+        url += '/after/' + lastId;
       }
       
       url += '/limit/' + limit;
@@ -50,7 +48,7 @@ class FeedManager {
         }
       });
       
-      renderer.render(data, append ? 0 : feeds.length);
+      renderer.render(data, append ? feeds.length : 0);
     }
   }
   
