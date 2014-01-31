@@ -1,0 +1,5 @@
+name: eyeOpener
+description: A sample chrome packaged application
+dependencies:
+  browser: any
+  polymer: 0.9.4
