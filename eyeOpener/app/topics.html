@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <title>Topics</title>
+    <link rel="stylesheet" type="text/css" href="/eyeOpener/app/assets/css/topics.css"/> 
+  </head>
+ 
+  <body>
+  <div style="width: 100%; text-align: center;">
+    <span id="signinButton">
+      <span class="g-signin"
+          data-callback="signinCallback"
+          data-clientid="806107602015-nvm3h6tcucug31skh7fl1e4pi6b98grh.apps.googleusercontent.com"
+          data-cookiepolicy="single_host_origin"
+          data-requestvisibleactions="http://schemas.google.com/AddActivity"
+          data-scope="https://www.googleapis.com/auth/plus.login">
+      </span>
+    </span>   
+  </div>
+    <ul id="topic-board" class="topic-board"></ul>
+    <script type="application/dart" src="topicManager.dart"></script>
+    <!-- for this next line to work, your pubspec.yaml file must have a dependency on 'browser' -->
+    <script src="packages/browser/dart.js"></script>
+    <script type="text/javascript">
+      (function() {
+       var po = document.createElement('script'); po.type = 'text/javascript'; po.async = true;
+       po.src = 'https://apis.google.com/js/client:plusone.js';
+       var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(po, s);
+     })();
+    </script>
+    <script type="text/javascript">
+    	function signinCallback(response) {
+    	  document.getElementById('signinButton').style.display = 'none';
+    	}
+    </script>
+  </body>
+</html>
