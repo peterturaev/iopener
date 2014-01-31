@@ -1320,3 +1320,58 @@ build.dart --machine --changed=app/eyeopener.dart
 
 build.dart finished [1996 ms]
 
+---
+build.dart --machine --changed=app/assets/css/topics.css --changed=app/assets/images/auto.jpg --changed=app/ass...
+
+build.dart finished [2309 ms]
+
+---
+build.dart --machine --changed=app/eyeopener.dart
+
+build.dart finished [1934 ms]
+
+---
+build.dart --machine --changed=app/eyeopener.dart
+
+build.dart finished [1982 ms]
+
+---
+build.dart --machine --changed=app/eyeopener.dart
+
+build.dart finished [2043 ms]
+
+---
+build.dart --machine --changed=app/eyeopener.dart
+
+build.dart finished [2178 ms]
+
+---
+build.dart --machine --changed=app/eyeopener.dart
+
+build.dart finished [2266 ms]
+
+---
+build.dart --machine --changed=app/eyeopener.dart
+
+build.dart finished [1742 ms]
+
+---
+build.dart --machine --changed=app/eyeopener.dart
+
+build.dart finished [2141 ms]
+
+---
+build.dart --machine --changed=app/eyeopener.dart
+
+build.dart finished [1570 ms]
+
+---
+build.dart --machine --changed=app/eyeopener.dart
+
+build.dart finished [1956 ms]
+
+---
+build.dart --machine --changed=app/eyeopener.dart
+
+build.dart finished [2229 ms]
+

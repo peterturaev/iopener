@@ -41,7 +41,7 @@ class swipe{
     event.preventDefault();
     this.endX = event.page.x;
     this.endY = event.page.y;
-    if(this.startX > this.endX){
+    if(this.startX != null && this.startX > this.endX){
       this.direction = 'lf';
     }else{
       this.direction = 'rt';
@@ -262,17 +262,25 @@ class Flip {
   }
   
   void _initTouchSwipe([num delta]){
-    window.animationFrame.then(this._initTouchSwipe);
+    print('----1');
     var _self = this;
     swipe Swipe = new swipe(querySelector(".page"));
     _self._setFlippingPage();
+    try{
+      _self._beforePage = _self._flippingPage.previousElementSibling;
+      _self._afterPage = _self._flippingPage.nextElementSibling;
+    }catch(e){
+      print(e + '--inTouchSwipe');
+    }
     if(Swipe.direction == 'rt'){
       _self._flipSide = 'l2r';
-      _self._turnPage(0, true);
+      _self._turnPage(0);
+      this._isAnimatingDiv = true;
       //_self._updatePage();
     }else{
       _self._flipSide = 'r2l';
-      _self._turnPage(180, true);
+      _self._turnPage(180);
+      this._isAnimatingDiv = true;
       //_self._updatePage();
     }
     
@@ -282,16 +290,8 @@ class Flip {
       }else{
         _self._start = false;
       }
-      
-     
-     
-      
-      _self._beforePage = _self._flippingPage.previousElementSibling;
-      _self._afterPage = _self._flippingPage.nextElementSibling;
-
-      
-
     }
+    
 
     if (Swipe.direction == 'u' || Swipe.direction == 'd') {
         //_self._removeOverlays();
@@ -304,6 +304,8 @@ class Flip {
     if (_self._currentPage == 0 && _self._flipSide == 'l2r' || _self._currentPage == _self._flipPagesCount && _self._flipSide == 'r2l') {
       return;
     } 
+    
+    window.animationFrame.then(this._initTouchSwipe);
   }
   
   bool _isAnimating(){
@@ -323,12 +325,17 @@ class Flip {
   }
   
   void _turnPage(num angle, [bool update = false]){
-    if(this._beforePage != null){
-      this._beforePage.style.transform = 'rotateY( -180deg )';
+   
+    try{
+        this._beforePage.style.transform = 'rotateY( -180deg )';
+    }catch(e){
+        print(e);
     }
+
     
     // if not moving manually set a transition to flip the page
     if (!update) {
+      print('---');
       this._flippingPage.style.transition = '-webkit-transform ' + this._flipSpeed.toString() + 'ms ' + this._flipTimingFunction.toString();
     }
     var idx;
