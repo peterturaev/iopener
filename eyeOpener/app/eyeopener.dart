@@ -1,6 +1,7 @@
 import 'dart:html';
 import 'dart:js';
-
+import 'dart:math';
+import 'dart_touch.dart' as touch;
 
 int boundsChange = 100;
 String query = '';

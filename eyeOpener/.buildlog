@@ -458,3 +458,23 @@ build.dart --machine --changed=app/eyeopener.dart
 
 build.dart finished [1731 ms]
 
+---
+build.dart --machine --changed=app/dart_touch.dart --changed=app/dndEvents.dart
+
+build.dart finished [1679 ms]
+
+---
+build.dart --machine --changed=app/assets/css/main.css
+
+build.dart finished [121 ms]
+
+---
+build.dart --machine --changed=app/eyeopener.dart
+
+build.dart finished [1634 ms]
+
+---
+build.dart --machine --changed=app/eyeopener.dart
+
+build.dart finished [1794 ms]
+
