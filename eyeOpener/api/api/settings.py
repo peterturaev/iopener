@@ -1,0 +1,5 @@
+GOOGLE_API_CLIENT_ID = 'http://806107602015-nvm3h6tcucug31skh7fl1e4pi6b98grh.apps.googleusercontent.com/'
+GOOGLE_API_CLIENT_SECRET = 'ChmCufQ-fNkPcliAdrFsft1a'
+GOOGLE_API_SCOPE = 'https://www.googleapis.com/auth/userinfo.profile https://www.googleapis.com/auth/userinfo.email'
+GOOGLE_OAUTH2_URL = 'https://accounts.google.com/o/oauth2/'
+GOOGLE_API_URL = 'https://www.googleapis.com/oauth2/v1/'
